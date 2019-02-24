@@ -33,8 +33,6 @@ class JuegoActivity : AppCompatActivity() {
         val editor = preferencias.edit()
         val nivel = preferencias.getString("modo", "Avanzado")
         val sonido: Boolean = preferencias.getBoolean("sound", true)
-        println(nivel)
-        println(sonido)
 
         val palabraAleatoria: String = when(nivel){
             "Avanzado" -> {
@@ -54,7 +52,13 @@ class JuegoActivity : AppCompatActivity() {
                 vocabulario()
             }
         }
-        if (palabraAleatoria.length > 9) tvSecreta.textSize = 18f
+        tvSecreta.textSize = when (palabraAleatoria.length) {
+            3, 4, 5 -> 24f
+            6, 7, 8 -> 22f
+            9, 10 -> 20f
+            11, 12 -> 18f
+            else -> 20f
+        }
         val secreta = palabraAleatoria.toUpperCase()
         val oculta = Array(secreta.length) { "_" }
         tvSecreta.text = oculta.joinToString(separator=" ")
@@ -70,16 +74,23 @@ class JuegoActivity : AppCompatActivity() {
         botones.forEach { button ->
             button.setOnClickListener{
                 letra = this.capturaLetra(it)
-                println(letra)
                 if (letra in secreta){
                     acierto++
-                    if (sonido && acierto < secreta.length) MediaPlayer.create(this, R.raw.acierto).start()
+                    if (sonido && acierto < secreta.length) {
+                        //val soundAcierto = MediaPlayer.create(this, R.raw.acierto)
+                        //soundAcierto.start()
+                        efectoSonido(R.raw.acierto)
+                    }
                     for (index in secreta.indices) {
                         if (letra == secreta[index].toString()) oculta[index] = letra
                     }
                     tvSecreta.text = oculta.joinToString(separator=" ")
                     if (secreta == oculta.joinToString(separator="")) {
-                        if(sonido) MediaPlayer.create(this, R.raw.victoria).start()
+                        if (sonido) {
+                            //val soundVictoria = MediaPlayer.create(this, R.raw.victoria)
+                            //soundVictoria.start()
+                            efectoSonido(R.raw.victoria)
+                        }
                         var victorias: Int = preferencias.getInt("victorias", 0)
                         victorias++
                         editor.putInt("victorias", victorias)
@@ -88,9 +99,11 @@ class JuegoActivity : AppCompatActivity() {
                     }
                 } else {
                     error++
-                    if (sonido && error < 6) MediaPlayer.create(this, R.raw.error).start()
-                    println("ERROR $error")
-                    if (error == 3) println("Has muerto en la horca.")
+                    if (sonido && error != 6) {
+                        //val soundError = MediaPlayer.create(this, R.raw.error)
+                        //soundError.start()
+                        efectoSonido(R.raw.error)
+                    }
                     when(error){
                         1 -> imgAhorcado.setImageResource(R.drawable.img2)
                         2 -> imgAhorcado.setImageResource(R.drawable.img3)
@@ -98,7 +111,11 @@ class JuegoActivity : AppCompatActivity() {
                         4 -> imgAhorcado.setImageResource(R.drawable.img5)
                         5 -> imgAhorcado.setImageResource(R.drawable.img6)
                         6 -> {
-                            if(sonido) MediaPlayer.create(this, R.raw.gameover).start()
+                            if (sonido) {
+                                //val soundOver = MediaPlayer.create(this, R.raw.gameover)
+                                //soundOver.start()
+                                efectoSonido(R.raw.gameover)
+                            }
                             imgAhorcado.setImageResource(R.drawable.img7)
                             var derrotas: Int = preferencias.getInt("derrotas", 0)
                             derrotas++
@@ -110,6 +127,11 @@ class JuegoActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun efectoSonido (efecto: Int) {
+        val player = MediaPlayer.create(this, efecto)
+        player.start()
     }
 
     private fun buscarPalabra(source: String): String {
@@ -130,11 +152,13 @@ class JuegoActivity : AppCompatActivity() {
             val tempConN: String = tempSinAc.replace("/001", "Ñ")
             val re = Regex("[^A-ZÑ]")
             val palabra = re.replace(tempConN, "")
-            palabra.forEach { let ->
-                if (let !in letras) buscarPalabra(source)
+
+            var controlPalabra = true
+            for (let in palabra) {
+                if (let !in letras) controlPalabra = false
             }
-            if(palabra.length < 3 || palabra.length > 12) buscarPalabra(source)
-            return palabra
+            if (palabra.length < 3 || palabra.length > 12) controlPalabra = false //buscarPalabra(source)
+            return if (controlPalabra) palabra else buscarPalabra(source)
         } catch (e: Exception) {
             val toastFallo = Toast.makeText(this, "Fallo de conexión: cambiando al modo Temas", Toast.LENGTH_LONG)
             toastFallo.setGravity(Gravity.TOP or Gravity.CENTER, 0, 550)
@@ -174,7 +198,7 @@ class JuegoActivity : AppCompatActivity() {
             val categoria = mItemObject.getString("CATEGORIA")
             val pista = mItemObject.getString("PISTA")
             val jsonPalabras = mItemObject.getJSONArray("PALABRAS")
-            for(index in 0 until jsonPalabras.length()){
+            for (index in 0 until jsonPalabras.length()){
                 val palObject = jsonPalabras.get(index).toString()
                 palabras.add(palObject)
             }
