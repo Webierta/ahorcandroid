@@ -19,5 +19,9 @@ class InfoActivity : AppCompatActivity() {
                 "Error: archivo info.txt no encontrado."
             }
         etInfo.setText(texto)
+
+        btnVolver.setOnClickListener {
+            finish()
+        }
     }
 }

@@ -36,7 +36,8 @@
             android:textAlignment="center" android:inputType="none" android:clickable="false"
             android:longClickable="false" android:selectAllOnFocus="false"
             android:focusableInTouchMode="false" android:linksClickable="false" android:textIsSelectable="false"
-            android:layout_marginBottom="2dp" app:layout_constraintBottom_toTopOf="@+id/linearLayout"/>
+            android:layout_marginBottom="2dp" app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            android:maxLines="2"/>
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="0dp"

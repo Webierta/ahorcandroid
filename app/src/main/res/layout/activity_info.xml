@@ -11,8 +11,10 @@
             android:layout_width="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="16dp" android:layout_height="0dp">
+            android:layout_height="0dp"
+            android:id="@+id/scrollView2"
+            app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/btnVolver">
         <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -26,7 +28,14 @@
                 android:textIsSelectable="false"
                 android:clickable="false"
                 android:longClickable="false" android:selectAllOnFocus="false"
-                android:focusableInTouchMode="false" android:linksClickable="false"
-                tools:layout_editor_absoluteY="16dp"/>
+                android:focusableInTouchMode="false"
+                tools:layout_editor_absoluteY="16dp" android:autoLink="web" android:linksClickable="true"/>
     </ScrollView>
+    <Button
+            android:text="@string/volver"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/btnVolver"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"/>
 </android.support.constraint.ConstraintLayout>
