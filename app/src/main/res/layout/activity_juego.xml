@@ -58,47 +58,47 @@
                         android:text="@string/a"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/btnA" android:layout_weight="1"
-                        android:textSize="24sp" style="@android:style/Widget.Material.Light.Button.Small"/>
+                        android:textSize="18sp" style="@android:style/Widget.Material.Light.Button.Small"/>
                 <Button
                         android:text="@string/b"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/btnB" android:layout_weight="1"
-                        android:textSize="24sp" style="@android:style/Widget.Material.Light.Button.Small"/>
+                        android:textSize="18sp" style="@android:style/Widget.Material.Light.Button.Small"/>
                 <Button
                         android:text="@string/c"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/btnC" android:layout_weight="1"
-                        android:textSize="24sp" style="@android:style/Widget.Material.Light.Button.Small"/>
+                        android:textSize="18sp" style="@android:style/Widget.Material.Light.Button.Small"/>
                 <Button
                         android:text="@string/d"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/btnD" android:layout_weight="1"
-                        android:textSize="24sp" style="@android:style/Widget.Material.Light.Button.Small"/>
+                        android:textSize="18sp" style="@android:style/Widget.Material.Light.Button.Small"/>
                 <Button
                         android:text="@string/e"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/btnE" android:layout_weight="1"
-                        android:textSize="24sp" style="@android:style/Widget.Material.Light.Button.Small"/>
+                        android:textSize="18sp" style="@android:style/Widget.Material.Light.Button.Small"/>
                 <Button
                         android:text="@string/f"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/btnF" android:layout_weight="1"
-                        android:textSize="24sp" style="@android:style/Widget.Material.Light.Button.Small"/>
+                        android:textSize="18sp" style="@android:style/Widget.Material.Light.Button.Small"/>
                 <Button
                         android:text="@string/g"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/btnG" android:layout_weight="1"
-                        android:textSize="24sp" style="@android:style/Widget.Material.Light.Button.Small"/>
+                        android:textSize="18sp" style="@android:style/Widget.Material.Light.Button.Small"/>
                 <Button
                         android:text="@string/h"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/btnH" android:layout_weight="1"
-                        android:textSize="24sp" style="@android:style/Widget.Material.Light.Button.Small"/>
+                        android:textSize="18sp" style="@android:style/Widget.Material.Light.Button.Small"/>
                 <Button
                         android:text="@string/i"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/btnI" android:layout_weight="1"
-                        android:textSize="24sp" style="@android:style/Widget.Material.Light.Button.Small"/>
+                        android:textSize="18sp" style="@android:style/Widget.Material.Light.Button.Small"/>
             </LinearLayout>
         </TableRow>
         <TableRow android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center">
@@ -110,47 +110,47 @@
                         android:text="@string/j"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/btnJ" android:layout_weight="1"
-                        android:textSize="24sp" style="@android:style/Widget.Material.Light.Button.Small"/>
+                        android:textSize="18sp" style="@android:style/Widget.Material.Light.Button.Small"/>
                 <Button
                         android:text="@string/k"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/btnK" android:layout_weight="1"
-                        android:textSize="24sp" style="@android:style/Widget.Material.Light.Button.Small"/>
+                        android:textSize="18sp" style="@android:style/Widget.Material.Light.Button.Small"/>
                 <Button
                         android:text="@string/l"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/btnL" android:layout_weight="1"
-                        android:textSize="24sp" style="@android:style/Widget.Material.Light.Button.Small"/>
+                        android:textSize="18sp" style="@android:style/Widget.Material.Light.Button.Small"/>
                 <Button
                         android:text="@string/m"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/btnM" android:layout_weight="1"
-                        android:textSize="24sp" style="@android:style/Widget.Material.Light.Button.Small"/>
+                        android:textSize="18sp" style="@android:style/Widget.Material.Light.Button.Small"/>
                 <Button
                         android:text="@string/n"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/btnN" android:layout_weight="1"
-                        android:textSize="24sp" style="@android:style/Widget.Material.Light.Button.Small"/>
+                        android:textSize="18sp" style="@android:style/Widget.Material.Light.Button.Small"/>
                 <Button
                         android:text="@string/ñ"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/btnÑ" android:layout_weight="1"
-                        android:textSize="24sp" style="@android:style/Widget.Material.Light.Button.Small"/>
+                        android:textSize="18sp" style="@android:style/Widget.Material.Light.Button.Small"/>
                 <Button
                         android:text="@string/o"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/btnO" android:layout_weight="1"
-                        android:textSize="24sp" style="@android:style/Widget.Material.Light.Button.Small"/>
+                        android:textSize="18sp" style="@android:style/Widget.Material.Light.Button.Small"/>
                 <Button
                         android:text="@string/p"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/btnP" android:layout_weight="1"
-                        android:textSize="24sp" style="@android:style/Widget.Material.Light.Button.Small"/>
+                        android:textSize="18sp" style="@android:style/Widget.Material.Light.Button.Small"/>
                 <Button
                         android:text="@string/q"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/btnQ" android:layout_weight="1"
-                        android:textSize="24sp" style="@android:style/Widget.Material.Light.Button.Small"/>
+                        android:textSize="18sp" style="@android:style/Widget.Material.Light.Button.Small"/>
             </LinearLayout>
         </TableRow>
         <TableRow android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center">
@@ -162,47 +162,47 @@
                         android:text="@string/r"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/btnR" android:layout_weight="1"
-                        android:textSize="24sp" style="@android:style/Widget.Material.Light.Button.Small"/>
+                        android:textSize="18sp" style="@android:style/Widget.Material.Light.Button.Small"/>
                 <Button
                         android:text="@string/s"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/btnS" android:layout_weight="1"
-                        android:textSize="24sp" style="@android:style/Widget.Material.Light.Button.Small"/>
+                        android:textSize="18sp" style="@android:style/Widget.Material.Light.Button.Small"/>
                 <Button
                         android:text="@string/t"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/btnT" android:layout_weight="1"
-                        android:textSize="24sp" style="@android:style/Widget.Material.Light.Button.Small"/>
+                        android:textSize="18sp" style="@android:style/Widget.Material.Light.Button.Small"/>
                 <Button
                         android:text="@string/u"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/btnU" android:layout_weight="1"
-                        android:textSize="24sp" style="@android:style/Widget.Material.Light.Button.Small"/>
+                        android:textSize="18sp" style="@android:style/Widget.Material.Light.Button.Small"/>
                 <Button
                         android:text="@string/v"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/btnV" android:layout_weight="1"
-                        android:textSize="24sp" style="@android:style/Widget.Material.Light.Button.Small"/>
+                        android:textSize="18sp" style="@android:style/Widget.Material.Light.Button.Small"/>
                 <Button
                         android:text="@string/w"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/btnW" android:layout_weight="1"
-                        android:textSize="24sp" style="@android:style/Widget.Material.Light.Button.Small"/>
+                        android:textSize="18sp" style="@android:style/Widget.Material.Light.Button.Small"/>
                 <Button
                         android:text="@string/x"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/btnX" android:layout_weight="1"
-                        android:textSize="24sp" style="@android:style/Widget.Material.Light.Button.Small"/>
+                        android:textSize="18sp" style="@android:style/Widget.Material.Light.Button.Small"/>
                 <Button
                         android:text="@string/y"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/btnY" android:layout_weight="1"
-                        android:textSize="24sp" style="@android:style/Widget.Material.Light.Button.Small"/>
+                        android:textSize="18sp" style="@android:style/Widget.Material.Light.Button.Small"/>
                 <Button
                         android:text="@string/z"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" android:id="@+id/btnZ" android:layout_weight="1"
-                        android:textSize="24sp" style="@android:style/Widget.Material.Light.Button.Small"/>
+                        android:textSize="18sp" style="@android:style/Widget.Material.Light.Button.Small"/>
             </LinearLayout>
         </TableRow>
     </TableLayout>

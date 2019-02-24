@@ -54,7 +54,7 @@ class JuegoActivity : AppCompatActivity() {
                 vocabulario()
             }
         }
-        if (palabraAleatoria.length > 10) tvSecreta.textSize = 18f
+        if (palabraAleatoria.length > 9) tvSecreta.textSize = 18f
         val secreta = palabraAleatoria.toUpperCase()
         val oculta = Array(secreta.length) { "_" }
         tvSecreta.text = oculta.joinToString(separator=" ")
