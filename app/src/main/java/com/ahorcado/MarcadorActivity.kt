@@ -1,8 +1,8 @@
 package com.ahorcado
 
 import android.content.Context
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_marcador.*
 
 class MarcadorActivity : AppCompatActivity() {

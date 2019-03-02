@@ -1,13 +1,13 @@
 package com.ahorcado
 
 import android.content.Context
-import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
-import android.widget.Toast
-import android.widget.ArrayAdapter
-import kotlinx.android.synthetic.main.activity_settings.*
 import android.net.ConnectivityManager
+import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.Gravity
+import android.widget.ArrayAdapter
+import android.widget.Toast
+import kotlinx.android.synthetic.main.activity_settings.*
 
 class SettingsActivity : AppCompatActivity() {
 

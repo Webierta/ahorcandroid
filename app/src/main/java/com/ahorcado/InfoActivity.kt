@@ -1,9 +1,8 @@
 package com.ahorcado
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_info.*
-import java.lang.Exception
 
 class InfoActivity : AppCompatActivity() {
 

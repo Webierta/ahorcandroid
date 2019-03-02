@@ -50,7 +50,7 @@
         <Button
                 android:text="@string/jugar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:id="@+id/btnJugar" android:background="#004d00"
+                android:layout_height="wrap_content" android:id="@+id/btnJugar" android:background="@color/pizarra"
                 android:textColor="#FFFFFF" android:textFontWeight="700" android:textSize="18sp"/>
         <Button
                 android:text="@string/marcador"
