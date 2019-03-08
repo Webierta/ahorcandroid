@@ -1,39 +1,45 @@
 package com.ahorcado
 
 import android.content.Intent
+import android.databinding.DataBindingUtil
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import com.ahorcado.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityMainBinding
+    private val miJuego = MiJuego()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         supportActionBar?.hide()
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.miJuego = miJuego
 
         val pinfo = this.packageManager.getPackageInfo(packageName, 0)
         val versionName = pinfo.versionName
-        val textoVersion = "Versión: $versionName\nCopyleft 2019 Jesús Cuerda"
-        editText.setText(textoVersion)
+        miJuego.version = "Versión: $versionName\nCopyleft 2019 Jesús Cuerda"
+        binding.setVariable(BR.miJuego, miJuego)
+        binding.executePendingBindings()
 
-        btnJugar.setOnClickListener {
+        binding.btnJugar.setOnClickListener {
             startActivity(Intent(this, JuegoActivity::class.java))
         }
-        btnMarcador.setOnClickListener {
+        binding.btnMarcador.setOnClickListener {
             startActivity(Intent(this, MarcadorActivity::class.java))
         }
-        btnOpciones.setOnClickListener {
+        binding.btnOpciones.setOnClickListener {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
-        btnInfo.setOnClickListener {
+        binding.btnInfo.setOnClickListener {
             startActivity(Intent(this, InfoActivity::class.java))
         }
-        btnSalir.setOnClickListener {
+        binding.btnSalir.setOnClickListener {
             finish()
         }
-        btnPayPal.setOnClickListener {
+        binding.btnPayPal.setOnClickListener {
             val urlPaypal = "https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=986PSAHLH6N4L"
             startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(urlPaypal)))
         }
