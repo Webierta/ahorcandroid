@@ -35,7 +35,6 @@
                 android:backgroundTint="#FFFFFF"
                 android:spinnerMode="dropdown"
                 android:textAlignment="gravity"
-                android:selectedItemPosition="@={miJuego.nivel}"
                 app:layout_constraintStart_toEndOf="@+id/textView2"
                 app:layout_constraintTop_toTopOf="@+id/textView2"/>
 
