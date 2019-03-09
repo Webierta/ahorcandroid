@@ -2,17 +2,19 @@ package com.ahorcado
 
 import android.content.Context
 import android.content.Intent
+import android.databinding.DataBindingUtil
 import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.StrictMode
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
+import com.ahorcado.databinding.ActivityJuegoBinding
 import android.view.Gravity
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.Toast
-import kotlinx.android.synthetic.main.activity_juego.*
 import org.json.JSONArray
 import org.json.JSONObject
 import org.jsoup.Jsoup
@@ -20,12 +22,15 @@ import java.text.Normalizer
 
 class JuegoActivity : AppCompatActivity() {
 
+    private lateinit var binding: ActivityJuegoBinding
+    private val miJuego = MiJuego()
     private lateinit var horcaImage: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_juego)
         supportActionBar?.hide()
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_juego)
+        binding.miJuego = miJuego
 
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
@@ -37,19 +42,19 @@ class JuegoActivity : AppCompatActivity() {
 
         val palabraAleatoria = when(nivel){
             "Avanzado" -> {
-                btnPista.visibility = View.INVISIBLE
+                binding.btnPista.visibility = View.INVISIBLE
                 buscarPalabra("https://www.palabrasaleatorias.com/?fs=1&fs2=0&Submit=Nueva+palabra")
             }
             "Júnior" -> {
-                btnPista.visibility = View.INVISIBLE
+                binding.btnPista.visibility = View.INVISIBLE
                 buscarPalabra("https://www.palabrasaleatorias.com/?fs=1&fs2=1&Submit=Nueva+palabra")
             }
             "Temas" -> {
-                btnPista.visibility = View.VISIBLE
+                binding.btnPista.visibility = View.VISIBLE
                 vocabulario()
             }
             else -> {
-                btnPista.visibility = View.VISIBLE
+                binding.btnPista.visibility = View.VISIBLE
                 vocabulario()
             }
         }
@@ -60,23 +65,21 @@ class JuegoActivity : AppCompatActivity() {
             10, 11, 12 -> R.dimen.text_mini
             else -> R.dimen.text_normal
         }
-        tvSecreta.textSize = resources.getDimension(sizeRes)
+        binding.tvSecreta.textSize = resources.getDimension(sizeRes)
 
         val secreta = palabraAleatoria.toUpperCase()
         val oculta = Array(secreta.length) { "_" }
-        tvSecreta.text = oculta.joinToString(separator=" ")
+        binding.tvSecreta.text = oculta.joinToString(separator=" ")
 
         var error = 0
         var acierto = 0
-        val botones = listOf<Button>(
-            btnA, btnB, btnC, btnD, btnE, btnF, btnG, btnH, btnI,
-            btnJ, btnK, btnL, btnM, btnN, btnÑ, btnO, btnP, btnQ,
-            btnR, btnS, btnT, btnU, btnV, btnW, btnX, btnY, btnZ)
-
+        val teclado = listaBotones(binding.fila1)
+        teclado.addAll(listaBotones(binding.fila2))
+        teclado.addAll(listaBotones(binding.fila3))
         var letra: String
-        horcaImage = findViewById(R.id.imgAhorcado)
+        horcaImage = binding.imgAhorcado
         var sonidoRes: Int
-        botones.forEach { button ->
+        teclado.forEach { button ->
             button.setOnClickListener{
                 letra = this.capturaLetra(it)
                 if (letra in secreta){
@@ -85,7 +88,7 @@ class JuegoActivity : AppCompatActivity() {
                     for (index in secreta.indices) {
                         if (letra == secreta[index].toString()) oculta[index] = letra
                     }
-                    tvSecreta.text = oculta.joinToString(separator=" ")
+                    binding.tvSecreta.text = oculta.joinToString(separator=" ")
                     if (secreta == oculta.joinToString(separator="")) {
                         sonidoRes = R.raw.victoria
                         var victorias: Int = preferencias.getInt("victorias", 0)
@@ -98,7 +101,7 @@ class JuegoActivity : AppCompatActivity() {
                     error++
                     sonidoRes = R.raw.error
                     when(error){
-                        1 -> horcaImage.setImageResource(R.drawable.img2)  //imgAhorcado.setImageResource(R.drawable.img2)
+                        1 -> horcaImage.setImageResource(R.drawable.img2)
                         2 -> horcaImage.setImageResource(R.drawable.img3)
                         3 -> horcaImage.setImageResource(R.drawable.img4)
                         4 -> horcaImage.setImageResource(R.drawable.img5)
@@ -120,6 +123,16 @@ class JuegoActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun listaBotones(fila: LinearLayout): MutableList<Button> {
+        val botonesList = mutableListOf<Button>()
+        val filaKeys: Int = fila.childCount
+        for (i in 0 until filaKeys) {
+            val v = fila.getChildAt(i)
+            botonesList += findViewById<Button>(v.id)
+        }
+        return botonesList
     }
 
     private fun buscarPalabra(source: String): String {
@@ -155,7 +168,8 @@ class JuegoActivity : AppCompatActivity() {
             val editor = preferencias.edit()
             editor.putString("modo", "Temas")
             editor.apply()
-            btnPista.visibility = View.VISIBLE
+            //btnPista.visibility = View.VISIBLE
+            binding.btnPista.visibility = View.VISIBLE
             return vocabulario()
         }
     }
@@ -212,7 +226,7 @@ class JuegoActivity : AppCompatActivity() {
                 }
             }
         }
-        btnPista.setOnClickListener {
+        binding.btnPista.setOnClickListener {
             val toastPista = Toast.makeText(this, "Pista: $pistaPalabra", Toast.LENGTH_LONG)
             toastPista.setGravity(Gravity.TOP or Gravity.CENTER, 0, 550)
             toastPista.show()
