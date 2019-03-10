@@ -89,7 +89,7 @@
                     android:id="@+id/btnOpciones"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/opciones"/>
+                    android:text="@string/ajustes"/>
 
             <Button
                     android:id="@+id/btnInfo"

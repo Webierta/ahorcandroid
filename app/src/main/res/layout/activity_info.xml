@@ -11,41 +11,43 @@
     <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
             tools:context=".InfoActivity">
 
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/bar_info"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
+            android:theme="@style/ToolbarTheme"
+            app:layout_constraintTop_toTopOf="parent"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            tools:layout_editor_absoluteX="16dp" />
+
         <ScrollView
-                android:id="@+id/scrollView2"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_marginBottom="8dp"
-                app:layout_constraintBottom_toTopOf="@+id/btnVolver"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+            android:id="@+id/scrollView2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bar_info">
 
             <TextView
-                    android:id="@+id/etInfo"
-                    style="@style/NameStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:autoLink="web"
-                    android:lineSpacingMultiplier="1.2"
-                    android:linksClickable="true"
-                    android:text="@{miJuego.texto}"
-                    tools:layout_editor_absoluteY="16dp"/>
-        </ScrollView>
-
-        <Button
-                android:id="@+id/btnVolver"
-                android:layout_width="wrap_content"
+                android:id="@+id/etInfo"
+                style="@style/NameStyle"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/volver"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/scrollView2"/>
-    </android.support.constraint.ConstraintLayout>
+                android:autoLink="web"
+                android:lineSpacingMultiplier="1.2"
+                android:linksClickable="true"
+                android:text="@{miJuego.texto}"
+                tools:layout_editor_absoluteY="16dp" />
 
+        </ScrollView>
+    </android.support.constraint.ConstraintLayout>
 </layout>

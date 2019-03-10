@@ -168,7 +168,6 @@ class JuegoActivity : AppCompatActivity() {
             val editor = preferencias.edit()
             editor.putString("modo", "Temas")
             editor.apply()
-            //btnPista.visibility = View.VISIBLE
             binding.btnPista.visibility = View.VISIBLE
             return vocabulario()
         }
