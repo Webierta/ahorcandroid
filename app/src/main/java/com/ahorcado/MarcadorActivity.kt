@@ -12,7 +12,6 @@ class MarcadorActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMarcadorBinding
     private val miJuego = MiJuego()
-    private val preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +27,7 @@ class MarcadorActivity : AppCompatActivity() {
         actionBar.setLogo(R.mipmap.ic_launcher)
         actionBar.setDisplayUseLogoEnabled(true)
 
+        val preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE)
         val victorias: Int  = preferencias.getInt("victorias", 0)
         val derrotas: Int = preferencias.getInt("derrotas", 0)
         miJuego.victorias = victorias
@@ -44,6 +44,7 @@ class MarcadorActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
         R.id.action_reset -> {
+            val preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE)
             val editor = preferencias.edit()
             editor.putInt("victorias", 0)
             editor.putInt("derrotas", 0)

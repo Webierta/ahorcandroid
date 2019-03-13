@@ -5,7 +5,7 @@
 
     <item
         android:id="@+id/action_guardar"
-        android:icon="@android:drawable/ic_menu_save"
+        android:icon="@drawable/ic_action_save"
         android:title="@string/guardar"
         app:showAsAction="ifRoom|withText" />
 

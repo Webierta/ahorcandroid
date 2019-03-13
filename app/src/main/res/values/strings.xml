@@ -11,9 +11,8 @@
     <string name="guardar">Guardar</string>
     <string name="pista">Pista</string>
     <string name="horca">Horca: error</string>
-    <string name="secreta">AHORCADO</string>
     <string name="reset">Reset</string>
-    <string name="itemNivel">Nivel seleccionado:</string>
+    <string name="nivel">Nivel</string>
     <string name="a">A</string>
     <string name="b">B</string>
     <string name="c">C</string>

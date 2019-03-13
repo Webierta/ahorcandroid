@@ -13,105 +13,89 @@
             android:layout_height="match_parent"
             tools:context=".MainActivity">
 
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/bar_main"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:elevation="4dp"
+            android:theme="@style/ToolbarTheme"
+            app:layout_constraintTop_toTopOf="parent"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
         <TextView
-                android:id="@+id/textView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="2dp"
-                android:fontFamily="@font/tiza"
-                android:text="@string/titulo"
-                android:textSize="24sp"
-                app:layout_constraintBottom_toTopOf="@+id/imageView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:fontFamily="@font/tiza"
+            android:text="@string/titulo"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.496"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bar_main" />
 
         <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="2dp"
-                android:clickable="false"
-                android:contentDescription="@string/app_name"
-                app:layout_constraintBottom_toTopOf="@+id/editText"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView"
-                app:srcCompat="@mipmap/icon128"/>
+            android:id="@+id/imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:clickable="false"
+            android:contentDescription="@string/app_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:srcCompat="@mipmap/icon128" />
 
         <TextView
-                android:id="@+id/editText"
-                android:layout_width="277dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="2dp"
-                android:text="@{miJuego.version}"
-                android:maxLines="2"
-                android:textAlignment="center"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView"/>
+            android:id="@+id/editText"
+            android:layout_width="277dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:maxLines="2"
+            android:text="@{miJuego.version}"
+            android:textAlignment="center"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
         <LinearLayout
-                android:id="@+id/linearLayout"
-                android:layout_width="0dp"
+            android:id="@+id/linearLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:padding="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editText">
+
+            <Button
+                android:id="@+id/btnJugar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:layout_marginBottom="2dp"
-                android:gravity="center_vertical"
-                android:orientation="vertical"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/editText">
-
-            <Button
-                    android:id="@+id/btnJugar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/pizarra"
-                    android:text="@string/jugar"
-                    android:textColor="#FFFFFF"
-                    android:textFontWeight="700"
-                    android:textSize="18sp"/>
-
-            <Button
-                    android:id="@+id/btnMarcador"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/marcador"/>
-
-            <Button
-                    android:id="@+id/btnOpciones"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/ajustes"/>
-
-            <Button
-                    android:id="@+id/btnInfo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/info"/>
-
-            <Button
-                    android:id="@+id/btnSalir"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/salir"/>
+                android:layout_marginBottom="42dp"
+                android:background="@color/pizarra"
+                android:text="@string/jugar"
+                android:textColor="#FFFFFF"
+                android:textFontWeight="700"
+                android:textSize="18sp" />
 
             <ImageButton
-                    android:id="@+id/btnPayPal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
-                    android:background="#FFFFFF"
-                    android:contentDescription="@string/donar"
-                    app:srcCompat="@mipmap/donate"/>
+                android:id="@+id/btnPayPal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="42dp"
+                android:background="#FFFFFF"
+                android:contentDescription="@string/donar"
+                app:srcCompat="@mipmap/donate" />
         </LinearLayout>
     </android.support.constraint.ConstraintLayout>
 </layout>

@@ -35,6 +35,7 @@ class SettingsActivity : AppCompatActivity() {
         val niveles = arrayOf("Avanzado", "Júnior", "Temas")
         val adaptador = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, niveles)
         binding.nivel.adapter = adaptador
+        //binding.nivel.setSelection(1)
 
         val preferencias = getSharedPreferences("datos", Context.MODE_PRIVATE)
         val nivel = preferencias.getString("modo", "Avanzado")
@@ -44,6 +45,11 @@ class SettingsActivity : AppCompatActivity() {
 
         binding.sonido.isChecked = miJuego.sonido
         binding.textNivel.text = miJuego.modo
+
+        binding.nivel.setSelection(0)
+        binding.nivel.selectedItem
+        //binding.nivel.defaultFocusHighlightEnabled = true
+            //highlightCurrentRow(currentSelectedView);
 
         binding.nivel.onItemClickListener = AdapterView.OnItemClickListener { parent, _, position, _ ->
             val selectedItem = parent.getItemAtPosition(position) as String

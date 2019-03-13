@@ -20,6 +20,7 @@ import org.json.JSONObject
 import org.jsoup.Jsoup
 import java.text.Normalizer
 
+
 class JuegoActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityJuegoBinding
@@ -58,18 +59,32 @@ class JuegoActivity : AppCompatActivity() {
                 vocabulario()
             }
         }
-        val sizeRes = when (palabraAleatoria.length){
-            3, 4, 5 -> R.dimen.text_grande
-            6, 7 -> R.dimen.text_normal
-            8, 9 -> R.dimen.text_peque
-            10, 11, 12 -> R.dimen.text_mini
+        //val palabraAleatoria = "DESMARMCANDOSE" // 14
+        //val palabraAleatoria = "DESMARCANDOS"  // 12
+        //val palabraAleatoria = "SEPARANDOS" // 10
+        //val palabraAleatoria = "DESMARCA"  // 8
+        //val palabraAleatoria = "MAPA"  // 4
+        /*val sizeRes = when (palabraAleatoria.length){
+            3, 4 -> R.dimen.text_macro
+            5, 6 -> R.dimen.text_grande
+            7, 8 -> R.dimen.text_normal
+            9, 10 -> R.dimen.text_mini
+            11, 12 -> R.dimen.text_micro
             else -> R.dimen.text_normal
         }
-        binding.tvSecreta.textSize = resources.getDimension(sizeRes)
+        binding.tvSecreta.textSize = resources.getDimension(sizeRes)*/
+        //binding.tvSecreta.letterSpacing = -0.4f
+        //if (palabraAleatoria.length > 9) {
+        //    binding.tvSecreta.setAutoSizeTextTypeUniformWithPresetSizes(14)
+        //}
 
         val secreta = palabraAleatoria.toUpperCase()
         val oculta = Array(secreta.length) { "_" }
         binding.tvSecreta.text = oculta.joinToString(separator=" ")
+        /*val sizeRes = when (palabraAleatoria.length){
+            10, 11, 12 -> binding.tvSecreta.letterSpacing = -0.2f
+            else -> binding.tvSecreta.letterSpacing = 0f
+        }*/
 
         var error = 0
         var acierto = 0
