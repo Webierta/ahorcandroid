@@ -8,24 +8,24 @@ import android.os.Bundle
 import android.os.StrictMode
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import com.ahorcado.databinding.ActivityJuegoBinding
 import android.view.Gravity
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
+import com.ahorcado.databinding.ActivityJuegoBinding
 import org.json.JSONArray
 import org.json.JSONObject
 import org.jsoup.Jsoup
 import java.text.Normalizer
-
 
 class JuegoActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityJuegoBinding
     private val miJuego = MiJuego()
     private lateinit var horcaImage: ImageView
+    private var mediaPlayer: MediaPlayer? = null  // private lateinit var mediaPlayer: MediaPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +41,7 @@ class JuegoActivity : AppCompatActivity() {
         val nivel = preferencias.getString("modo", "Avanzado")
         val sonido: Boolean = preferencias.getBoolean("sound", true)
 
-        val palabraAleatoria = when(nivel){
+        val palabraAleatoria = when (nivel) {
             "Avanzado" -> {
                 binding.btnPista.visibility = View.INVISIBLE
                 buscarPalabra("https://www.palabrasaleatorias.com/?fs=1&fs2=0&Submit=Nueva+palabra")
@@ -59,32 +59,9 @@ class JuegoActivity : AppCompatActivity() {
                 vocabulario()
             }
         }
-        //val palabraAleatoria = "DESMARMCANDOSE" // 14
-        //val palabraAleatoria = "DESMARCANDOS"  // 12
-        //val palabraAleatoria = "SEPARANDOS" // 10
-        //val palabraAleatoria = "DESMARCA"  // 8
-        //val palabraAleatoria = "MAPA"  // 4
-        /*val sizeRes = when (palabraAleatoria.length){
-            3, 4 -> R.dimen.text_macro
-            5, 6 -> R.dimen.text_grande
-            7, 8 -> R.dimen.text_normal
-            9, 10 -> R.dimen.text_mini
-            11, 12 -> R.dimen.text_micro
-            else -> R.dimen.text_normal
-        }
-        binding.tvSecreta.textSize = resources.getDimension(sizeRes)*/
-        //binding.tvSecreta.letterSpacing = -0.4f
-        //if (palabraAleatoria.length > 9) {
-        //    binding.tvSecreta.setAutoSizeTextTypeUniformWithPresetSizes(14)
-        //}
-
         val secreta = palabraAleatoria.toUpperCase()
         val oculta = Array(secreta.length) { "_" }
-        binding.tvSecreta.text = oculta.joinToString(separator=" ")
-        /*val sizeRes = when (palabraAleatoria.length){
-            10, 11, 12 -> binding.tvSecreta.letterSpacing = -0.2f
-            else -> binding.tvSecreta.letterSpacing = 0f
-        }*/
+        binding.tvSecreta.text = oculta.joinToString(separator = " ")
 
         var error = 0
         var acierto = 0
@@ -93,19 +70,20 @@ class JuegoActivity : AppCompatActivity() {
         teclado.addAll(listaBotones(binding.fila3))
         var letra: String
         horcaImage = binding.imgAhorcado
-        var sonidoRes: Int
         teclado.forEach { button ->
-            button.setOnClickListener{
+            button.setOnClickListener {
                 letra = this.capturaLetra(it)
-                if (letra in secreta){
-                    acierto++
-                    sonidoRes = R.raw.acierto
+                if (letra in secreta) {
                     for (index in secreta.indices) {
-                        if (letra == secreta[index].toString()) oculta[index] = letra
+                        if (letra == secreta[index].toString()) {
+                            oculta[index] = letra
+                            acierto++
+                        }
                     }
-                    binding.tvSecreta.text = oculta.joinToString(separator=" ")
-                    if (secreta == oculta.joinToString(separator="")) {
-                        sonidoRes = R.raw.victoria
+                    if (sonido && acierto < secreta.length) efectoSonido(R.raw.acierto)
+                    binding.tvSecreta.text = oculta.joinToString(separator = " ")
+                    if (secreta == oculta.joinToString(separator = "")) {
+                        if (sonido) efectoSonido(R.raw.victoria)
                         var victorias: Int = preferencias.getInt("victorias", 0)
                         victorias++
                         editor.putInt("victorias", victorias)
@@ -114,15 +92,15 @@ class JuegoActivity : AppCompatActivity() {
                     }
                 } else {
                     error++
-                    sonidoRes = R.raw.error
-                    when(error){
+                    if (sonido && error != 6) efectoSonido(R.raw.error)
+                    when (error) {
                         1 -> horcaImage.setImageResource(R.drawable.img2)
                         2 -> horcaImage.setImageResource(R.drawable.img3)
                         3 -> horcaImage.setImageResource(R.drawable.img4)
                         4 -> horcaImage.setImageResource(R.drawable.img5)
                         5 -> horcaImage.setImageResource(R.drawable.img6)
                         6 -> {
-                            sonidoRes = R.raw.gameover
+                            if (sonido) efectoSonido(R.raw.gameover)
                             horcaImage.setImageResource(R.drawable.img7)
                             var derrotas: Int = preferencias.getInt("derrotas", 0)
                             derrotas++
@@ -132,12 +110,20 @@ class JuegoActivity : AppCompatActivity() {
                         }
                     }
                 }
-                if (sonido) {
-                    val mediaPlayer = MediaPlayer.create(this, sonidoRes)
-                    mediaPlayer.start()
-                }
             }
         }
+    }
+
+    private fun efectoSonido(tipoSonido: Int) {
+        liberarMedia()
+        mediaPlayer = MediaPlayer.create(this, tipoSonido)
+        mediaPlayer?.setOnPreparedListener {
+            onPrepared()
+        }
+    }
+
+    private fun onPrepared() {
+        mediaPlayer?.start()
     }
 
     private fun listaBotones(fila: LinearLayout): MutableList<Button> {
@@ -188,7 +174,7 @@ class JuegoActivity : AppCompatActivity() {
         }
     }
 
-    private fun vocabulario(): String{
+    private fun vocabulario(): String {
         val dataPalabras = try {
             application.assets.open("vocabulario.json")
                 .bufferedReader().use { it.readText() }
@@ -214,7 +200,7 @@ class JuegoActivity : AppCompatActivity() {
             val categoria = mItemObject.getString("CATEGORIA")
             val pista = mItemObject.getString("PISTA")
             val jsonPalabras = mItemObject.getJSONArray("PALABRAS")
-            for (index in 0 until jsonPalabras.length()){
+            for (index in 0 until jsonPalabras.length()) {
                 val palObject = jsonPalabras.get(index).toString()
                 palabras.add(palObject)
             }
@@ -225,7 +211,7 @@ class JuegoActivity : AppCompatActivity() {
         }
 
         val numberCategoria = (0 until categoriaPalabras.size).random()
-        val randomCategoria= categoriaPalabras[numberCategoria]
+        val randomCategoria = categoriaPalabras[numberCategoria]
         var categoriaPalabra = ""
         var randomPalabra = ""
         for ((key, value) in randomCategoria) {
@@ -254,20 +240,35 @@ class JuegoActivity : AppCompatActivity() {
         return boton.text.toString()
     }
 
-    private fun alertaOtra (titulo: String, mensaje: String) {
-        val icono: Int = if(titulo == "VICTORIA") R.mipmap.triunfosblack else R.mipmap.derrotasblack
-        AlertDialog.Builder(this@JuegoActivity)
-            .setIcon(icono)
-            .setTitle(titulo)
-            .setMessage(mensaje)
-            .setPositiveButton("Sí"){ _, _ ->
-                finish()
-                startActivity(Intent(this, JuegoActivity::class.java))
-            }
-            .setNegativeButton("No") { _, _ ->
-                finish()
-            }
-            .setCancelable(false)
-            .create().show()
+    private fun alertaOtra(titulo: String, mensaje: String) {
+        val icono: Int = if (titulo == "VICTORIA") R.mipmap.triunfosblack else R.mipmap.derrotasblack
+        val dialogoOtra = AlertDialog.Builder(this@JuegoActivity)
+        dialogoOtra.setIcon(icono)
+        dialogoOtra.setTitle(titulo)
+        dialogoOtra.setMessage(mensaje)
+        dialogoOtra.setPositiveButton("Sí") { _, _ ->
+            liberarMedia()
+            finish()
+            if (isFinishing) startActivity(Intent(this, JuegoActivity::class.java))
+        }
+        dialogoOtra.setNegativeButton("No") { _, _ ->
+            liberarMedia()
+            finish()
+        }
+        dialogoOtra.setCancelable(false)
+        dialogoOtra.create()
+        if (!isFinishing) {
+            dialogoOtra.show()
+        }
     }
+
+    private fun liberarMedia() {
+        if (mediaPlayer != null) {
+            if (mediaPlayer!!.isPlaying) mediaPlayer!!.stop()
+            mediaPlayer!!.reset()
+            mediaPlayer!!.release()
+            mediaPlayer = null
+        }
+    }
+
 }
