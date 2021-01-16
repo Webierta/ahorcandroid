@@ -1,0 +1,9 @@
+<p>The objective of the game is to discover a hidden word by matching the letters that make it up.</p>
+<p>For this, the program proposes a random word obtained from the web or from its own word store, depending on the selected game mode.</p>
+<p>The application has 4 levels organized in 2 game modes:</p>
+<ul>
+<li>Topics (offline): Provides a hint about the words, which are organized into categories.</li>
+<li>Junior (online): Reduced list of about 500 easier words for children.</li>
+<li>Advanced (online): Base of about 4,000 words.</li>
+<li>Expert (online): Extensive word base (around 640,000 words), including numerous verb forms, which greatly increases the difficulty.</li>
+<p>Free open source software that does not require any special permission, only the permission of internet connection to search words, although it is possible to play without internet connection in the offline levels.</p>

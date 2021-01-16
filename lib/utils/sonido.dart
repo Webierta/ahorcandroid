@@ -1,0 +1,26 @@
+import 'package:assets_audio_player/assets_audio_player.dart';
+
+enum Archivo { acierto, error, derrota, victoria }
+
+extension ArchivoExtension on Archivo {
+  static const files = {
+    Archivo.acierto: 'assets/audio/acierto.aac',
+    Archivo.error: 'assets/audio/error.aac',
+    Archivo.derrota: 'assets/audio/gameover.aac',
+    Archivo.victoria: 'assets/audio/victoria.aac',
+  };
+
+  String get file => files[this];
+}
+
+class Sound {
+  AssetsAudioPlayer assetsAudioPlayer;
+
+  Sound() {
+    assetsAudioPlayer = AssetsAudioPlayer();
+  }
+
+  Future<void> play(String archivo) async => await assetsAudioPlayer.open(Audio(archivo));
+
+  Future<void> stop() async => await assetsAudioPlayer.stop();
+}

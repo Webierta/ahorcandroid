@@ -1,0 +1,9 @@
+<p>El objetivo del juego es descubrir una palabra oculta acertando las letras que la componen.</p>
+<p>Para ello el programa propone una palabra al azar obtenida de la web o de su propio almacén de palabras, dependiendo del modo de juego seleccionado.</p>
+<p>La aplicación dispone de 4 niveles organizados en 2 modos de juego:</p>
+<ul>
+<li>Temas (offline):  Ofrece una pista sobre las palabras, que están organizadas en categorías.</li>
+<li>Júnior (online): Listado reducido de unas 500 palabras más fáciles para niños.</li>
+<li>Avanzado (online): Base de unas 4.000 palabras.</li>
+<li>Experto (online): Extensa base de palabras (en torno a 640.000 palabras), incluidas numerosas formas verbales, lo que aumenta considerablemente la dificultad.</li>
+<p>Software libre de código abierto que no requiere ningún permiso especial, solo el permiso de conexión a internet para buscar palabras, aunque es posible jugar sin conexión a internet en los niveles offline.</p>
