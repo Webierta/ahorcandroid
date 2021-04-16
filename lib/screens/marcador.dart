@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../provider/data.dart';
+
+import '../models/marcador_data.dart';
 import '../utils/constantes.dart';
 
 class Marcador extends StatelessWidget {
-  static const String id = 'marcador';
+  const Marcador();
 
   @override
   Widget build(BuildContext context) {
-    Data _myProvider = Provider.of<Data>(context);
     return Scaffold(
-      backgroundColor: Color(pizarra),
       appBar: AppBar(
-        title: Text('Marcador'),
+        title: const Text('Marcador'),
         actions: [
           IconButton(
-            icon: Icon(Icons.delete_forever),
-            onPressed: () => _myProvider.resetMarcador(),
+            icon: const Icon(Icons.delete_forever),
+            onPressed: () => context.read<MarcadorData>().resetMarcador(),
           ),
         ],
       ),
@@ -24,10 +23,8 @@ class Marcador extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Flexible(
-              child: FractionallySizedBox(heightFactor: 0.6),
-            ),
-            Padding(
+            const Flexible(child: FractionallySizedBox(heightFactor: 0.6)),
+            const Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.0),
               child: FittedBox(
                 fit: BoxFit.fitWidth,
@@ -36,30 +33,30 @@ class Marcador extends StatelessWidget {
                   style: TextStyle(
                     fontFamily: 'Tiza',
                     fontSize: 28.0,
-                    color: Colors.grey[300],
+                    color: Color(0xFFE0E0E0), // Colors.grey[300],
                   ),
                 ),
               ),
             ),
-            Flexible(child: FractionallySizedBox(heightFactor: 0.2)),
+            const Flexible(child: FractionallySizedBox(heightFactor: 0.2)),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Tarjeta(
-                  Icon(
+                  const Icon(
                     Icons.emoji_events,
-                    color: Colors.grey[200],
+                    color: Color(0xFFEEEEEE), //Colors.grey[200],
                     size: 60.0,
                   ),
-                  '${_myProvider.victorias}',
+                  '${context.watch<MarcadorData>().victorias}',
                 ),
                 Tarjeta(
-                  ImageIcon(
+                  const ImageIcon(
                     AssetImage('assets/images/derrotas.png'),
-                    color: Colors.grey[200],
+                    color: Color(0xFFEEEEEE), //Colors.grey[200],
                     size: 60.0,
                   ),
-                  '${_myProvider.derrotas}',
+                  '${context.watch<MarcadorData>().derrotas}',
                 ),
               ],
             ),
@@ -74,21 +71,21 @@ class Tarjeta extends StatelessWidget {
   final Widget imagen;
   final String texto;
 
-  Tarjeta(this.imagen, this.texto);
+  const Tarjeta(this.imagen, this.texto);
 
   @override
   Widget build(BuildContext context) {
     return Flexible(
       child: Card(
         elevation: 10.0,
-        margin: EdgeInsets.symmetric(horizontal: 10.0),
+        margin: const EdgeInsets.symmetric(horizontal: 10.0),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-        color: Color(verdeOscuro),
+        color: const Color(verdeOscuro),
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.all(10.0),
-              decoration: BoxDecoration(
+              padding: const EdgeInsets.all(10.0),
+              decoration: const BoxDecoration(
                 border: Border(
                   bottom: BorderSide(
                     color: Colors.grey,
@@ -102,13 +99,13 @@ class Tarjeta extends StatelessWidget {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(20.0),
               child: Text(
                 texto,
-                style: TextStyle(
+                style: const TextStyle(
                   fontFamily: 'Tiza',
                   fontSize: 20.0,
-                  color: Colors.grey[300],
+                  color: Color(0xFFE0E0E0), //Colors.grey[300],
                 ),
               ),
             ),

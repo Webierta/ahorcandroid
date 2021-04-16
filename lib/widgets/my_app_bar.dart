@@ -1,11 +1,10 @@
+import 'package:ahorcado/utils/constantes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show SystemNavigator;
 import 'package:provider/provider.dart';
 
-import '../provider/data.dart';
-import '../screens/ajustes.dart';
-import '../screens/marcador.dart';
-import '../screens/info.dart';
+import '../models/ajustes_data.dart';
+import '../routes.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   final AppBar appBar;
@@ -16,33 +15,32 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    Data _myProvider = Provider.of<Data>(context);
-
     return AppBar(
-      title: Text('Ahorcado'),
+      title: const Text('Ahorcado'),
       automaticallyImplyLeading: false,
       actions: [
         IconButton(
-          icon: Icon(Icons.settings),
+          icon: const Icon(Icons.settings),
           onPressed: () {
-            _myProvider.resetValores();
-            Scaffold.of(context).removeCurrentSnackBar();
-            Navigator.pushNamed(context, Ajustes.id);
+            context.read<AjustesData>().getValores();
+            ScaffoldMessenger.of(context).removeCurrentSnackBar();
+            Navigator.of(context)?.pushNamed(RouteGenerator.ajustes);
           },
         ),
         PopupMenuButton<String>(
+          color: Color(verdeOscuro),
           onSelected: (String value) {
             switch (value) {
               case 'Salir':
                 SystemNavigator.pop();
                 break;
               case 'Marcador':
-                Scaffold.of(context).removeCurrentSnackBar();
-                Navigator.pushNamed(context, Marcador.id);
+                ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                Navigator.of(context)?.pushNamed(RouteGenerator.marcador);
                 break;
               case 'Info':
-                Scaffold.of(context).removeCurrentSnackBar();
-                Navigator.pushNamed(context, Info.id);
+                ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                Navigator.of(context)?.pushNamed(RouteGenerator.info);
                 break;
             }
           },

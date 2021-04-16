@@ -21,23 +21,23 @@ const int accent = 0xffD81B60;
 */
 
 // GameOver
-enum GameOver { VITORIA, DERROTA }
+enum GameOver { victoria, derrota }
 
 extension GameOverExtension on GameOver {
   static const titulos = {
-    GameOver.VITORIA: '¡Victoria!',
-    GameOver.DERROTA: '¡Ahorcado!',
+    GameOver.victoria: '¡Victoria!',
+    GameOver.derrota: '¡Ahorcado!',
   };
 
   String get titulo => titulos[this];
 
   static const iconos = {
-    GameOver.VITORIA: Icons.military_tech,
-    GameOver.DERROTA: Icons.gavel,
+    GameOver.victoria: Icons.military_tech,
+    GameOver.derrota: Icons.gavel,
   };
 
   IconData get icono => iconos[this];
 }
 
-const victoria = GameOver.VITORIA;
-const derrota = GameOver.DERROTA;
+const victoria = GameOver.victoria;
+const derrota = GameOver.derrota;

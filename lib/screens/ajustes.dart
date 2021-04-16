@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../provider/data.dart';
+
+import '../models/ajustes_data.dart';
 import '../utils/constantes.dart';
 
 class Ajustes extends StatelessWidget {
-  static const String id = 'ajustes';
+  const Ajustes();
 
   @override
   Widget build(BuildContext context) {
-    Data _myProvider = Provider.of<Data>(context);
     return Scaffold(
       appBar: AppBar(title: Text('Ajustes')),
       body: SingleChildScrollView(
@@ -21,8 +21,8 @@ class Ajustes extends StatelessWidget {
                 children: [
                   Text('Sonido'),
                   Switch(
-                    value: _myProvider.soundValor,
-                    onChanged: (bool value) => _myProvider.updateSound = value,
+                    value: context.watch<AjustesData>().soundValor,
+                    onChanged: (bool value) => context.read<AjustesData>().updateSound = value,
                     activeTrackColor: Color(pizarra),
                     activeColor: Colors.greenAccent[400],
                   ),
@@ -34,8 +34,8 @@ class Ajustes extends StatelessWidget {
                 children: [
                   Text('Modo online'),
                   Switch(
-                    value: _myProvider.modoValor,
-                    onChanged: (bool value) => _myProvider.updateModo = value,
+                    value: context.watch<AjustesData>().modoValor,
+                    onChanged: (bool value) => context.read<AjustesData>().updateModo = value,
                     activeTrackColor: Color(pizarra),
                     activeColor: Colors.greenAccent[400],
                   ),
@@ -46,31 +46,36 @@ class Ajustes extends StatelessWidget {
                 children: [
                   Text('Nivel'),
                   DropdownButton<String>(
-                    value: _myProvider.nivelValor ?? modoOnline[_myProvider.modoValor].first,
-                    items: modoOnline[_myProvider.modoValor]
+                    dropdownColor: Color(verdeOscuro),
+                    value: context.watch<AjustesData>().nivelValor ??
+                        modoOnline[context.watch<AjustesData>().modoValor].first,
+                    items: modoOnline[context.watch<AjustesData>().modoValor]
                         .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(value),
                       );
                     }).toList(),
-                    onChanged: (String value) => _myProvider.updateNivel = value,
+                    onChanged: (String value) => context.read<AjustesData>().updateNivel = value,
                   ),
                 ],
               ),
               Divider(color: Colors.grey),
               Padding(
                 padding: const EdgeInsets.only(top: 20.0),
-                child: RaisedButton.icon(
-                  shape:
-                      RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                  color: Color(pizarra),
-                  padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                child: ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                    primary: Color(pizarra),
+                    padding: EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+                  ),
                   onPressed: () {
-                    _myProvider.setPrefSound = _myProvider.soundValor;
-                    _myProvider.setPrefModo = _myProvider.modoValor;
-                    _myProvider.setPrefNivel = _myProvider.nivelValor;
-                    Navigator.pop(context);
+                    context.read<AjustesData>()
+                      ..setPrefSound = context.read<AjustesData>().soundValor
+                      ..setPrefModo = context.read<AjustesData>().modoValor
+                      ..setPrefNivel = context.read<AjustesData>().nivelValor;
+                    Navigator.of(context)?.pop();
                   },
                   icon: Icon(Icons.save, color: Colors.white),
                   label: Text(

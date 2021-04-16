@@ -1,39 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../provider/data.dart';
-import 'juego.dart';
-import '../widgets/my_app_bar.dart';
-import '../widgets/diaolog_not_found.dart';
+import '../models/ajustes_data.dart';
+import '../models/package_info_provider.dart';
+import '../models/palabra_data.dart';
+import '../routes.dart';
+import '../utils/buscar_palabra.dart';
 import '../utils/constantes.dart';
+import '../widgets/diaolog_not_found.dart';
+import '../widgets/my_app_bar.dart';
 
 class Home extends StatelessWidget {
-  static const String id = 'home';
+  const Home();
 
   @override
   Widget build(BuildContext context) {
-    Orientation orientacion = MediaQuery.of(context).orientation;
-    Data _myProvider = Provider.of<Data>(context);
-
-    List<Widget> _listaWidgets() {
-      return [
-        Image.asset(
-          'assets/images/icon128.png',
-          scale: orientacion == Orientation.portrait ? 1 : 1.5,
-        ),
-        Padding(
-          padding: orientacion == Orientation.portrait
-              ? EdgeInsets.only(top: 10.0)
-              : EdgeInsets.only(left: 10.0),
-          child: Text(
-            'Version: ${_myProvider.version}\nCopyleft 2019-2021\nJesús Cuerda',
-            textAlign: orientacion == Orientation.portrait ? TextAlign.center : TextAlign.left,
-          ),
-        ),
-      ];
-    }
-
-    void _errorPalabra(context) {
+    void _errorPalabra(BuildContext context) {
       showDialog(
         context: context,
         builder: (_) => AlertDialog(
@@ -41,133 +23,141 @@ class Home extends StatelessWidget {
           content: Text('Error al seleccionar la palabra secreta.\n'
               'Si se repite, elimina los datos almacenados, desinstala e instala la última versión.'),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               child: Text('Cerrar'),
-              onPressed: () => Navigator.of(context).pop(),
+              onPressed: () => Navigator.of(context)?.pop(),
             )
           ],
         ),
       );
     }
 
+    _onPlay(BuildContext context) async {
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+      context.read<PalabraData>()
+        ..resetPartida()
+        ..buscando = true;
+      var control = true;
+      await BuscarPalabra(context).init();
+      if (context.read<PalabraData>().palabraNotFound()) {
+        control = false;
+        var respuesta = await Navigator.push(
+            context, MaterialPageRoute(builder: (context) => DialogoNotFound()));
+        if (respuesta == false) {
+          context.read<PalabraData>()
+            ..buscando = false
+            ..resetPartida();
+        } else {
+          context.read<AjustesData>()
+            ..setPrefModo = false
+            ..setPrefNivel = defaultNivel;
+          await BuscarPalabra(context).init();
+          control = true;
+        }
+      }
+      if (context.read<PalabraData>().palabraSecreta == 'UNEXPECTED ERROR') {
+        control = false;
+        context.read<PalabraData>().resetPartida();
+        _errorPalabra(context);
+      }
+      if (control) {
+        await Navigator.of(context)
+            ?.pushNamed(RouteGenerator.juego)
+            ?.then((value) => context.read<PalabraData>().buscando = false);
+      }
+    }
+
     return Scaffold(
       appBar: MyAppBar(appBar: AppBar()),
       body: Builder(
-        builder: (context) => Center(
-          child: _myProvider.buscando == true
-              ? WillPopScope(
-                  onWillPop: () async => false,
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                    /*child: Text(
-                      'Generando una palabra,\nespera un momento por favor...',
-                      textAlign: TextAlign.center,
-                    ),*/
-                  ),
-                )
-              : Container(
-                  child: SingleChildScrollView(
-                    child: SizedBox(
-                      height: MediaQuery.of(context).size.height / 1.25,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                            child: FittedBox(
-                              fit: BoxFit.fitWidth,
-                              child: Text(
-                                'EL AHORCADO',
-                                style: TextStyle(
-                                  fontFamily: 'Tiza',
-                                  fontSize: 28.0,
-                                  color: Colors.grey[700],
-                                ),
+        builder: (context) {
+          return WillPopScope(
+            onWillPop: () async => false,
+            child: Center(
+              child: context.watch<PalabraData>().buscando == true
+                  ? CircularProgressIndicator()
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20.0),
+                          child: FittedBox(
+                            fit: BoxFit.fitWidth,
+                            child: Text(
+                              'EL AHORCADO',
+                              style: TextStyle(
+                                fontFamily: 'Tiza',
+                                fontSize: 28.0,
+                                color: Colors.white, //Color(0xFF616161),
                               ),
                             ),
                           ),
-                          Container(
-                            child: orientacion == Orientation.portrait
-                                ? Column(children: _listaWidgets())
-                                : Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: _listaWidgets(),
+                        ),
+                        LayoutBuilder(builder: (BuildContext context, BoxConstraints sizes) {
+                          return Wrap(
+                            direction: sizes.maxWidth > 600 ? Axis.horizontal : Axis.vertical,
+                            spacing: 10.0,
+                            children: [
+                              Image.asset(
+                                'assets/images/icon128.png',
+                                scale: sizes.maxWidth > 600 ? 1.5 : 1,
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(height: sizes.maxWidth > 600 ? 20 : 0),
+                                  Consumer<PackageInfoProvider>(
+                                    builder: (_, value, __) => Text(
+                                        'Version: ${value.version}\nCopyleft 2019-2021\nJesús Cuerda',
+                                        textAlign: sizes.maxWidth > 600
+                                            ? TextAlign.left
+                                            : TextAlign.center),
                                   ),
-                          ),
-                          RaisedButton.icon(
+                                ],
+                              ),
+                            ],
+                          );
+                        }),
+                        ElevatedButton.icon(
+                          onPressed: () => _onPlay(context),
+                          style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                            color: Color(pizarra),
-                            textColor: Colors.white,
-                            padding: EdgeInsets.all(10.0),
-                            onPressed: () async {
-                              Scaffold.of(context).removeCurrentSnackBar();
-                              _myProvider.resetPartida();
-                              _myProvider.buscando = true;
-                              bool control = true;
-                              await Juego().buscarPalabra(context, _myProvider);
-                              if (_myProvider.palabraSecreta == null ||
-                                  _myProvider.palabraSecreta == '' ||
-                                  _myProvider.palabraOculta == null ||
-                                  (_myProvider.palabraOculta?.isEmpty ?? true)) {
-                                control = false;
-                                var respuesta = await Navigator.push(
-                                  context,
-                                  MaterialPageRoute(builder: (context) => DialogoNotFound()),
-                                );
-                                if (respuesta == false) {
-                                  _myProvider.buscando = false;
-                                  _myProvider.resetPartida();
-                                } else {
-                                  _myProvider.setPrefModo = false;
-                                  _myProvider.setPrefNivel = defaultNivel;
-                                  await Juego().buscarPalabra(context, _myProvider);
-                                  control = true;
-                                }
-                              }
-
-                              if (_myProvider.palabraSecreta == 'UNEXPECTED ERROR') {
-                                control = false;
-                                _myProvider.resetPartida();
-                                _errorPalabra(context);
-                              }
-
-                              if (control) {
-                                Navigator.pushNamed(context, Juego.id)
-                                    .then((value) => _myProvider.buscando = false);
-                              }
-                            },
-                            icon: Icon(
-                              Icons.check_box,
-                              color: Colors.white,
-                              size: 60.0,
+                              borderRadius: BorderRadius.all(Radius.circular(10)),
                             ),
-                            label: Column(
-                              children: [
-                                Text(
-                                  'JUGAR',
-                                  style: TextStyle(
-                                    fontSize: 22.0,
-                                    letterSpacing: 2.0,
-                                  ),
+                            primary: Color(pizarra),
+                            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                          ),
+                          icon: Icon(
+                            Icons.check_box,
+                            color: Colors.white,
+                            size: 60.0,
+                          ),
+                          label: Column(
+                            children: [
+                              Text(
+                                'JUGAR',
+                                style: TextStyle(
+                                  fontSize: 24.0,
+                                  letterSpacing: 2.0,
                                 ),
-                                Text(
-                                  'Modo de Juego: ${_myProvider.nivelPref}',
+                              ),
+                              Consumer<AjustesData>(
+                                builder: (_, value, __) => Text(
+                                  'Nivel: ${value.nivelPref}',
                                   style: TextStyle(
-                                    fontSize: 10.0,
+                                    //fontSize: 14.0,
                                     fontWeight: FontWeight.w300,
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ),
-                ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

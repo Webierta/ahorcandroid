@@ -20,7 +20,19 @@ class Sound {
     assetsAudioPlayer = AssetsAudioPlayer();
   }
 
-  Future<void> play(String archivo) async => await assetsAudioPlayer.open(Audio(archivo));
+  Future<void> play(String archivo) async {
+    try {
+      await assetsAudioPlayer.open(Audio(archivo));
+    } catch (e) {
+      return null;
+    }
+  }
 
-  Future<void> stop() async => await assetsAudioPlayer.stop();
+  Future<void> stop() async {
+    try {
+      await assetsAudioPlayer.stop();
+    } catch (e) {
+      return null;
+    }
+  }
 }

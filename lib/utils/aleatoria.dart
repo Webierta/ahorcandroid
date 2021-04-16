@@ -1,11 +1,11 @@
 import 'dart:async';
-import 'package:html/parser.dart';
-import 'package:html/dom.dart';
-import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:flutter/services.dart';
 import 'dart:math' show Random;
+
 import 'package:diacritic/diacritic.dart';
+import 'package:flutter/services.dart';
+import 'package:html/parser.dart';
+import 'package:http/http.dart' as http;
 import 'package:list_spanish_words/list_spanish_words.dart';
 
 class Aleatoria {
@@ -17,7 +17,7 @@ class Aleatoria {
   String _pista;
   final random = Random();
 
-  init() async {
+  Future<void> init() async {
     switch (nivel) {
       case 'Temas':
         await palabraLocal();
@@ -50,19 +50,18 @@ class Aleatoria {
   Future<void> palabraWeb(String url) async {
     try {
       var response = await http.Client().get(Uri.parse(url));
-      //var response = await http.Client().get(url);
       if (response.statusCode == 200) {
-        // var html = parse(response.body);
         var html = parse(utf8.decode(response.bodyBytes));
         //List<Element> divs = html.querySelectorAll('div');
-        Element elemento = html.getElementsByTagName('div').last;
-        String palabra = _validar(elemento.text);
+        var elemento = html.getElementsByTagName('div').last;
+        var palabra = _validar(elemento.text);
         if (palabra == null) {
           throw Exception();
         }
         _palabra = palabra;
       } else {
-        throw Exception();
+        //throw Exception();
+        _palabra = null;
       }
     } catch (e) {
       _palabra = null;
@@ -70,7 +69,7 @@ class Aleatoria {
   }
 
   String _validar(String palabra) {
-    String valida = palabra.trim();
+    var valida = palabra.trim();
     if (valida.contains(' ')) {
       return null;
     }
@@ -84,14 +83,14 @@ class Aleatoria {
     return valida;
   }
 
-  Future _waitLista() => Future(() {
-        final completer = Completer();
-        int indexRandom = random.nextInt(630000);
-        completer.complete(list_spanish_words.sublist(indexRandom, indexRandom + 1).join('\n'));
-        return completer.future;
-      });
+  Future<void> listSpanishWords() async {
+    Future _waitLista() => Future(() {
+          final completer = Completer();
+          var indexRandom = random.nextInt(630000);
+          completer.complete(list_spanish_words.sublist(indexRandom, indexRandom + 1).join('\n'));
+          return completer.future;
+        });
 
-  listSpanishWords() async {
     /* try {
       int indexRandom = random.nextInt(630000);
       String word = _validar(list_spanish_words.sublist(indexRandom, indexRandom + 1).join('\n'));
@@ -102,8 +101,8 @@ class Aleatoria {
     } catch (e) {
       _palabra = null;
     } */
-    var wordLista = await _waitLista();
-    var word = _validar(wordLista);
+    var wordLista = await _waitLista() ?? '';
+    var word = _validar(wordLista as String);
     _palabra = word;
   }
 
@@ -111,22 +110,12 @@ class Aleatoria {
     String jsonString;
     try {
       jsonString = await rootBundle.loadString('assets/files/vocabulario.json');
-      final jsonResponse = await json.decode(jsonString);
-      var vocabulario = jsonResponse[jsonResponse.keys.toList().join()];
-      //List<String> keys = vocabulario[0].keys.toList();
-      int objetoRandom = random.nextInt(vocabulario.length);
-      //String categoria = vocabulario[objetoRandom]['CATEGORIA'];
-      /* var categorias = [];
-              for (int i = 0; i < vocabulario.length; i++) {
-              categorias.add(vocabulario[i]['CATEGORIA']);
-              }
-              String categoriaRandom = categorias[random.nextInt(categorias.length)];*/
-      _pista = vocabulario[objetoRandom]['PISTA'];
-      List<String> palabras = [];
-      for (var palabra in vocabulario[objetoRandom]['PALABRAS']) {
-        palabras.add(palabra);
-      }
-      String palabra = palabras[random.nextInt(palabras.length)];
+      final jsonResponse = json.decode(jsonString);
+      var vocabulario = jsonResponse[jsonResponse.keys.toList().join()] as List;
+      var objVocabulario = vocabulario[random.nextInt(vocabulario.length)] as Map<String, dynamic>;
+      _pista = objVocabulario['PISTA'] as String;
+      var palabras = (objVocabulario['PALABRAS'] as Iterable).map((p) => p as String)?.toList();
+      var palabra = palabras[random.nextInt(palabras.length)];
       _palabra = palabra ?? 'UNEXPECTED ERROR';
     } catch (e) {
       _palabra = 'UNEXPECTED ERROR';

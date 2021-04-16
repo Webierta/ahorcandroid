@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show Clipboard, ClipboardData;
 
 class Info extends StatelessWidget {
-  static const String id = 'info';
+  const Info();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Info'),
-        actions: [BotonCafe()],
+        title: const Text('Info'),
+        actions: const [BotonCafe()],
       ),
-      body: SingleChildScrollView(
+      body: const SingleChildScrollView(
         padding: EdgeInsets.all(10.0),
         child: Text(
           textoInfo,
@@ -35,7 +35,7 @@ class BotonCafe extends StatelessWidget {
           builder: (BuildContext context) => Scaffold(
             backgroundColor: Colors.transparent,
             body: Builder(
-              builder: (context) => DialogoInfo(),
+              builder: (context) => const DialogoInfo(),
             ),
           ),
         );
@@ -62,36 +62,38 @@ class DialogoInfo extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
               child: Center(
-                child: RaisedButton(
-                  shape:
-                      RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                  padding: EdgeInsets.all(10.0),
-                  child: Text(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                    padding: EdgeInsets.all(10.0),
+                    primary: Colors.green[900],
+                  ),
+                  child: const Text(
                     bitcoinAdress,
                     textAlign: TextAlign.center,
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () {
                     Clipboard.setData(ClipboardData(text: bitcoinAdress)).then(
-                      (value) => Scaffold.of(context).showSnackBar(
+                      (value) => ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text('Bitcoin Address copied to Clipboard')),
                       ),
                     );
                   },
-                  color: Colors.green[900],
                 ),
               ),
             ),
-            Text('El Ahorcado es Software libre sin publicidad. '
+            const Text('El Ahorcado es Software libre sin publicidad. '
                 'Puedes colaborar con el desarrollo de ésta y otras aplicaciones '
                 'con una pequeña aportación a mi monedero de Bitcoins.'),
           ],
         ),
       ),
       actions: [
-        FlatButton(
+        TextButton(
           child: Text('Cerrar'),
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => Navigator.of(context)?.pop(),
         )
       ],
     );

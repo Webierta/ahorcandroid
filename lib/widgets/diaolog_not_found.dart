@@ -7,21 +7,21 @@ class DialogoNotFound extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(pizarra),
+      backgroundColor: const Color(pizarra),
       body: WillPopScope(
         onWillPop: () async => false,
         child: AlertDialog(
-          title: Text('Fallo de conexión'),
-          content: Text('No ha sido posible seleccionar ninguna palabra. '
+          title: const Text('Fallo de conexión'),
+          content: const Text('No ha sido posible seleccionar ninguna palabra. '
               'Es posible que la conexión a internet haya fallado.\n'
               '¿Cambiar al modo Temas sin internet?'),
           actions: [
-            FlatButton(
-              child: const Text('VOLVER'),
+            TextButton(
+              child: const Text('Volver'),
               onPressed: () => Navigator.pop(context, false),
             ),
-            FlatButton(
-              child: const Text('ACEPTAR'),
+            TextButton(
+              child: const Text('Aceptar'),
               onPressed: () => Navigator.pop(context, true),
             ),
           ],
